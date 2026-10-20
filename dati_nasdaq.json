@@ -1,0 +1,32 @@
+{
+    "ultimo_aggiornamento": "2026-10-20 19:30:00",
+    "dati": [
+        {
+            "ticker": "MSFT",
+            "prezzo": 530.62,
+            "sma_20": 523.45,
+            "sma_50": 506.57,
+            "rsi": 61.31,
+            "segnale": "Rialzista (Buy/Accumulo)",
+            "motivazione": "Medie mobili a favore e RSI equilibrato."
+        },
+        {
+            "ticker": "ADBE",
+            "prezzo": 254.9,
+            "sma_20": 240.26,
+            "sma_50": 255.82,
+            "rsi": 62.66,
+            "segnale": "Ribassista (Prudenza)",
+            "motivazione": "Trend di medio periodo debole."
+        },
+        {
+            "ticker": "AMZN",
+            "prezzo": 262.37,
+            "sma_20": 253.8,
+            "sma_50": 256.52,
+            "rsi": 62.38,
+            "segnale": "Ribassista (Prudenza)",
+            "motivazione": "Trend di medio periodo debole."
+        }
+    ]
+}

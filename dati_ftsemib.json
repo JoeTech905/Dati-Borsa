@@ -1,0 +1,32 @@
+{
+    "ultimo_aggiornamento": "2026-10-20 19:29:55",
+    "dati": [
+        {
+            "ticker": "CPR.MI",
+            "prezzo": 6.58,
+            "sma_20": 6.18,
+            "sma_50": 6.0,
+            "rsi": 74.89,
+            "segnale": "Ipercomprato (Attenzione)",
+            "motivazione": "Il titolo ha corso molto, rischio storno."
+        },
+        {
+            "ticker": "ENEL.MI",
+            "prezzo": 9.19,
+            "sma_20": 8.88,
+            "sma_50": 9.08,
+            "rsi": 67.51,
+            "segnale": "Ribassista (Prudenza)",
+            "motivazione": "Trend di medio periodo debole."
+        },
+        {
+            "ticker": "HER.MI",
+            "prezzo": 3.53,
+            "sma_20": 3.51,
+            "sma_50": 3.65,
+            "rsi": 49.28,
+            "segnale": "Ribassista (Prudenza)",
+            "motivazione": "Trend di medio periodo debole."
+        }
+    ]
+}
