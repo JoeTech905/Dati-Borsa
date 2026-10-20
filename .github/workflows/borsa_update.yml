@@ -1,15 +1,15 @@
-name: Aggiorna Energia Daily
+name: Aggiorna Dati Borsa
 
 on:
   schedule:
-    - cron: '0 8 * * *' # Si attiva ogni giorno alle 08:00 UTC
+    - cron: '0 18 * * 1-5'
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  aggiorna-energia:
+  aggiorna-mercati:
     runs-on: ubuntu-latest
     steps:
       - name: Scarica il codice del repository
@@ -23,15 +23,15 @@ jobs:
       - name: Installa le librerie necessarie
         run: |
           python -m pip install --upgrade pip
-          pip install pandas requests lxml html5lib yfinance
+          pip install yfinance pandas lxml html5lib
 
-      - name: Esegui lo script di energia
-        run: python aggiorna_energia_daily.py
+      - name: Esegui lo script di analisi borsa
+        run: python aggiorna_borsa.py
 
       - name: Commit e push dei file aggiornati su GitHub
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
-          git add dati_energia_daily.json
-          git diff --staged --quiet || git commit -m "Aggiornamento automatico dati energia [skip ci]"
+          git add dati_*.json
+          git diff --staged --quiet || git commit -m "Aggiornamento automatico dati di borsa [skip ci]"
           git push
