@@ -1,66 +1,167 @@
 from datetime import datetime
+import io
 import json
 import pandas as pd
+import requests
 import yfinance as yf
 
 
 def scarica_ticker_ftse_mib():
-  """Scarica il FTSE MIB da Wikipedia con fallback di sicurezza"""
+  """Scarica il FTSE MIB da Wikipedia usando un User-Agent valido per evitare blocchi"""
   try:
     url = "https://it.wikipedia.org/wiki/FTSE_MIB"
-    tabelle = pd.read_html(url)
-    df = tabelle[0]
-    colonna = [c for c in df.columns if "Ticker" in c or "Simbolo" in c or "Quotazione" in c]
-    simboli = df[colonna[0]].dropna().tolist() if colonna else df.iloc[:, 0].dropna().tolist()
-    tickers = [s if ".MI" in str(s) else f"{str(s).strip()}.MI" for s in simboli]
-    if len(tickers) > 5:
-      return tickers
-  except Exception:
-    pass
-  
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,"
+            " like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        )
+    }
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+      tabelle = pd.read_html(io.StringIO(response.text))
+      df = None
+      for tab in tabelle:
+        cols_str = " ".join([str(c) for c in tab.columns]).lower()
+        if (
+            "società" in cols_str
+            or "ticker" in cols_str
+            or "simbolo" in cols_str
+            or "quotazione" in cols_str
+        ):
+          df = tab
+          break
+      if df is None:
+        df = tabelle[0]
+
+      colonna = [
+          c
+          for c in df.columns
+          if "Ticker" in str(c)
+          or "Simbolo" in str(c)
+          or "Quotazione" in str(c)
+      ]
+      simboli = (
+          df[colonna[0]].dropna().tolist()
+          if colonna
+          else df.iloc[:, 0].dropna().tolist()
+      )
+      tickers = [
+          s if ".MI" in str(s) else f"{str(s).strip()}.MI" for s in simboli
+      ]
+
+      if len(tickers) > 5:
+        print(f"Scaricati con successo {len(tickers)} titoli del FTSE MIB.")
+        return tickers
+  except Exception as e:
+    print(f"Errore durante lo scraping di Wikipedia per FTSE MIB: {e}")
+
   print("Uso lista di fallback per FTSE MIB.")
-  return ["ENEL.MI", "ENI.MI", "UCG.MI", "ISP.MI", "STLA.MI", "RACE.MI", "G.MI", "MB.MI", "CPR.MI", "HER.MI"]
+  return [
+      "ENEL.MI",
+      "ENI.MI",
+      "UCG.MI",
+      "ISP.MI",
+      "STLA.MI",
+      "RACE.MI",
+      "G.MI",
+      "MB.MI",
+      "CPR.MI",
+      "HER.MI",
+  ]
 
 
 def scarica_ticker_sp500():
   """Scarica l'S&P 500 da Wikipedia con fallback di sicurezza"""
   try:
     url = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
-    tabelle = pd.read_html(url)
-    df = tabelle[0]
-    simboli = df["Symbol"].dropna().tolist()
-    tickers = [str(s).replace(".", "-").strip() for s in simboli]
-    if len(tickers) > 50:
-      return tickers
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,"
+            " like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        )
+    }
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+      tabelle = pd.read_html(io.StringIO(response.text))
+      df = tabelle[0]
+      simboli = df["Symbol"].dropna().tolist()
+      tickers = [str(s).replace(".", "-").strip() for s in simboli]
+      if len(tickers) > 50:
+        return tickers
   except Exception:
     pass
-  
+
   print("Uso lista di fallback per S&P 500.")
-  return ["AAPL", "MSFT", "NVDA", "AMZN", "GOOGL", "META", "TSLA", "BRK-B", "JPM", "V", "JNJ", "WMT", "UNH", "XOM", "MA"]
+  return [
+      "AAPL",
+      "MSFT",
+      "NVDA",
+      "AMZN",
+      "GOOGL",
+      "META",
+      "TSLA",
+      "BRK-B",
+      "JPM",
+      "V",
+      "JNJ",
+      "WMT",
+      "UNH",
+      "XOM",
+      "MA",
+  ]
 
 
 def scarica_ticker_nasdaq():
   """Scarica il Nasdaq-100 da Wikipedia con fallback di sicurezza"""
   try:
     url = "https://en.wikipedia.org/wiki/NASDAQ-100"
-    tabelle = pd.read_html(url)
-    df = None
-    for tab in tabelle:
-      if "Ticker" in tab.columns or "Symbol" in tab.columns:
-        df = tab
-        break
-    if df is None:
-      df = tabelle[3]
-    colonna = [c for c in df.columns if "Ticker" in c or "Symbol" in c]
-    simboli = df[colonna[0]].dropna().tolist() if colonna else df.iloc[:, 1].dropna().tolist()
-    tickers = [str(s).replace(".", "-").strip() for s in simboli]
-    if len(tickers) > 20:
-      return tickers
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,"
+            " like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        )
+    }
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+      tabelle = pd.read_html(io.StringIO(response.text))
+      df = None
+      for tab in tabelle:
+        if "Ticker" in tab.columns or "Symbol" in tab.columns:
+          df = tab
+          break
+      if df is None:
+        df = tabelle[3]
+      colonna = [c for c in df.columns if "Ticker" in c or "Symbol" in c]
+      simboli = (
+          df[colonna[0]].dropna().tolist()
+          if colonna
+          else df.iloc[:, 1].dropna().tolist()
+      )
+      tickers = [str(s).replace(".", "-").strip() for s in simboli]
+      if len(tickers) > 20:
+        return tickers
   except Exception:
     pass
-  
+
   print("Uso lista di fallback per Nasdaq-100.")
-  return ["AAPL", "MSFT", "NVDA", "AMZN", "META", "TSLA", "AVGO", "COST", "NFLX", "AMD", "PEP", "ADBE", "CSCO", "TMUS", "INTC"]
+  return [
+      "AAPL",
+      "MSFT",
+      "NVDA",
+      "AMZN",
+      "META",
+      "TSLA",
+      "AVGO",
+      "COST",
+      "NFLX",
+      "AMD",
+      "PEP",
+      "ADBE",
+      "CSCO",
+      "TMUS",
+      "INTC",
+  ]
 
 
 def analizza_e_salva_mercato(nome_file, lista_ticker):
@@ -69,12 +170,8 @@ def analizza_e_salva_mercato(nome_file, lista_ticker):
     return
 
   print(f"\nInizio scansione di {len(lista_ticker)} titoli per {nome_file}...")
-  
-  # ----------------------------------------------------
-  # MODIFICA QUI: Cambia il numero di risultati desiderati
-  # ----------------------------------------------------
-  top_n = 10  
-  
+
+  top_n = 10  # Numero di risultati desiderati in visualizzazione
   risultati_screening = []
 
   # FASE 1: Screening rapido su tutti i titoli
@@ -84,7 +181,11 @@ def analizza_e_salva_mercato(nome_file, lista_ticker):
       if df.empty or len(df) < 20:
         continue
 
-      close = df["Close"].iloc[:, 0] if isinstance(df.columns, pd.MultiIndex) else df["Close"]
+      close = (
+          df["Close"].iloc[:, 0]
+          if isinstance(df.columns, pd.MultiIndex)
+          else df["Close"]
+      )
 
       prezzo_attuale = float(close.iloc[-1])
       prezzo_passato = float(close.iloc[-20])
@@ -96,11 +197,9 @@ def analizza_e_salva_mercato(nome_file, lista_ticker):
       rs = gain / loss
       rsi = float((100 - (100 / (1 + rs))).iloc[-1])
 
-      risultati_screening.append({
-          "Ticker": ticker, 
-          "Rend_1M": rendimento_pct, 
-          "RSI_raw": rsi
-      })
+      risultati_screening.append(
+          {"Ticker": ticker, "Rend_1M": rendimento_pct, "RSI_raw": rsi}
+      )
     except Exception:
       continue
 
@@ -121,7 +220,11 @@ def analizza_e_salva_mercato(nome_file, lista_ticker):
   for ticker in migliori_ticker:
     try:
       df = yf.download(ticker, period="6mo", interval="1d", progress=False)
-      close = df["Close"].iloc[:, 0] if isinstance(df.columns, pd.MultiIndex) else df["Close"]
+      close = (
+          df["Close"].iloc[:, 0]
+          if isinstance(df.columns, pd.MultiIndex)
+          else df["Close"]
+      )
 
       ultimo_prezzo = float(close.iloc[-1])
       sma_20 = float(close.rolling(window=20).mean().iloc[-1])
@@ -130,7 +233,9 @@ def analizza_e_salva_mercato(nome_file, lista_ticker):
       delta = close.diff()
       gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
       loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
-      rsi = float((100 - (100 / (1 + (gain / loss)))).iloc[-1])
+      rsi = float(
+          (100 - (100 / (1 + (gain / loss)))).iloc[-1]
+      )
 
       segnale = "Neutro"
       motivo = "Trend laterale o fase di transizione."
