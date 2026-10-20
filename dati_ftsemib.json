@@ -1,5 +1,5 @@
 {
-    "ultimo_aggiornamento": "2026-10-20 19:29:55",
+    "ultimo_aggiornamento": "2026-10-20 20:37:51",
     "dati": [
         {
             "ticker": "CPR.MI",
@@ -27,6 +27,51 @@
             "rsi": 49.28,
             "segnale": "Ribassista (Prudenza)",
             "motivazione": "Trend di medio periodo debole."
+        },
+        {
+            "ticker": "G.MI",
+            "prezzo": 42.33,
+            "sma_20": 42.37,
+            "sma_50": 43.58,
+            "rsi": 46.75,
+            "segnale": "Ribassista (Prudenza)",
+            "motivazione": "Trend di medio periodo debole."
+        },
+        {
+            "ticker": "RACE.MI",
+            "prezzo": 356.35,
+            "sma_20": 350.31,
+            "sma_50": 354.63,
+            "rsi": 62.45,
+            "segnale": "Ribassista (Prudenza)",
+            "motivazione": "Trend di medio periodo debole."
+        },
+        {
+            "ticker": "ISP.MI",
+            "prezzo": 5.99,
+            "sma_20": 6.36,
+            "sma_50": 6.61,
+            "rsi": 26.61,
+            "segnale": "Ipervenduto (Possibile Rimbalzo)",
+            "motivazione": "Prezzo tirato molto al ribasso, potenziale occasione."
+        },
+        {
+            "ticker": "UCG.MI",
+            "prezzo": 74.12,
+            "sma_20": 78.95,
+            "sma_50": 81.93,
+            "rsi": 26.57,
+            "segnale": "Ipervenduto (Possibile Rimbalzo)",
+            "motivazione": "Prezzo tirato molto al ribasso, potenziale occasione."
+        },
+        {
+            "ticker": "MB.MI",
+            "prezzo": 25.25,
+            "sma_20": 26.68,
+            "sma_50": 27.63,
+            "rsi": 23.46,
+            "segnale": "Ipervenduto (Possibile Rimbalzo)",
+            "motivazione": "Prezzo tirato molto al ribasso, potenziale occasione."
         }
     ]
 }

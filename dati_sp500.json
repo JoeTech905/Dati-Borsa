@@ -1,30 +1,84 @@
 {
-    "ultimo_aggiornamento": "2026-10-20 19:29:58",
+    "ultimo_aggiornamento": "2026-10-20 20:37:58",
     "dati": [
         {
             "ticker": "MSFT",
-            "prezzo": 530.62,
-            "sma_20": 523.45,
-            "sma_50": 506.57,
-            "rsi": 61.31,
+            "prezzo": 531.87,
+            "sma_20": 523.51,
+            "sma_50": 506.59,
+            "rsi": 62.31,
             "segnale": "Rialzista (Buy/Accumulo)",
             "motivazione": "Medie mobili a favore e RSI equilibrato."
         },
         {
             "ticker": "AMZN",
-            "prezzo": 262.38,
-            "sma_20": 253.8,
-            "sma_50": 256.52,
-            "rsi": 62.38,
+            "prezzo": 262.63,
+            "sma_20": 253.81,
+            "sma_50": 256.53,
+            "rsi": 62.6,
             "segnale": "Ribassista (Prudenza)",
             "motivazione": "Trend di medio periodo debole."
         },
         {
             "ticker": "AAPL",
-            "prezzo": 339.26,
-            "sma_20": 337.6,
-            "sma_50": 326.91,
-            "rsi": 60.02,
+            "prezzo": 339.5,
+            "sma_20": 337.61,
+            "sma_50": 326.92,
+            "rsi": 60.49,
+            "segnale": "Rialzista (Buy/Accumulo)",
+            "motivazione": "Medie mobili a favore e RSI equilibrato."
+        },
+        {
+            "ticker": "GOOGL",
+            "prezzo": 340.27,
+            "sma_20": 345.33,
+            "sma_50": 343.95,
+            "rsi": 46.17,
+            "segnale": "Rialzista (Buy/Accumulo)",
+            "motivazione": "Medie mobili a favore e RSI equilibrato."
+        },
+        {
+            "ticker": "JPM",
+            "prezzo": 335.26,
+            "sma_20": 333.74,
+            "sma_50": 345.79,
+            "rsi": 60.4,
+            "segnale": "Ribassista (Prudenza)",
+            "motivazione": "Trend di medio periodo debole."
+        },
+        {
+            "ticker": "TSLA",
+            "prezzo": 373.71,
+            "sma_20": 369.71,
+            "sma_50": 361.11,
+            "rsi": 60.79,
+            "segnale": "Rialzista (Buy/Accumulo)",
+            "motivazione": "Medie mobili a favore e RSI equilibrato."
+        },
+        {
+            "ticker": "JNJ",
+            "prezzo": 259.36,
+            "sma_20": 260.12,
+            "sma_50": 264.81,
+            "rsi": 45.3,
+            "segnale": "Ribassista (Prudenza)",
+            "motivazione": "Trend di medio periodo debole."
+        },
+        {
+            "ticker": "NVDA",
+            "prezzo": 216.47,
+            "sma_20": 227.04,
+            "sma_50": 222.81,
+            "rsi": 36.45,
+            "segnale": "Rialzista (Buy/Accumulo)",
+            "motivazione": "Medie mobili a favore e RSI equilibrato."
+        },
+        {
+            "ticker": "META",
+            "prezzo": 694.25,
+            "sma_20": 731.87,
+            "sma_50": 659.23,
+            "rsi": 39.83,
             "segnale": "Rialzista (Buy/Accumulo)",
             "motivazione": "Medie mobili a favore e RSI equilibrato."
         }

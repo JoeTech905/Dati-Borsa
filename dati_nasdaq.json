@@ -1,30 +1,93 @@
 {
-    "ultimo_aggiornamento": "2026-10-20 19:30:00",
+    "ultimo_aggiornamento": "2026-10-20 20:38:04",
     "dati": [
         {
-            "ticker": "MSFT",
-            "prezzo": 530.62,
-            "sma_20": 523.45,
-            "sma_50": 506.57,
-            "rsi": 61.31,
-            "segnale": "Rialzista (Buy/Accumulo)",
-            "motivazione": "Medie mobili a favore e RSI equilibrato."
-        },
-        {
             "ticker": "ADBE",
-            "prezzo": 254.9,
-            "sma_20": 240.26,
-            "sma_50": 255.82,
-            "rsi": 62.66,
+            "prezzo": 256.73,
+            "sma_20": 240.35,
+            "sma_50": 255.86,
+            "rsi": 63.78,
             "segnale": "Ribassista (Prudenza)",
             "motivazione": "Trend di medio periodo debole."
         },
         {
+            "ticker": "MSFT",
+            "prezzo": 531.87,
+            "sma_20": 523.51,
+            "sma_50": 506.59,
+            "rsi": 62.31,
+            "segnale": "Rialzista (Buy/Accumulo)",
+            "motivazione": "Medie mobili a favore e RSI equilibrato."
+        },
+        {
             "ticker": "AMZN",
-            "prezzo": 262.37,
-            "sma_20": 253.8,
-            "sma_50": 256.52,
-            "rsi": 62.38,
+            "prezzo": 262.63,
+            "sma_20": 253.81,
+            "sma_50": 256.53,
+            "rsi": 62.6,
+            "segnale": "Ribassista (Prudenza)",
+            "motivazione": "Trend di medio periodo debole."
+        },
+        {
+            "ticker": "PEP",
+            "prezzo": 134.02,
+            "sma_20": 128.12,
+            "sma_50": 133.75,
+            "rsi": 67.8,
+            "segnale": "Ribassista (Prudenza)",
+            "motivazione": "Trend di medio periodo debole."
+        },
+        {
+            "ticker": "AAPL",
+            "prezzo": 339.5,
+            "sma_20": 337.61,
+            "sma_50": 326.92,
+            "rsi": 60.49,
+            "segnale": "Rialzista (Buy/Accumulo)",
+            "motivazione": "Medie mobili a favore e RSI equilibrato."
+        },
+        {
+            "ticker": "CSCO",
+            "prezzo": 106.71,
+            "sma_20": 110.77,
+            "sma_50": 110.69,
+            "rsi": 49.14,
+            "segnale": "Rialzista (Buy/Accumulo)",
+            "motivazione": "Medie mobili a favore e RSI equilibrato."
+        },
+        {
+            "ticker": "TSLA",
+            "prezzo": 373.71,
+            "sma_20": 369.71,
+            "sma_50": 361.11,
+            "rsi": 60.79,
+            "segnale": "Rialzista (Buy/Accumulo)",
+            "motivazione": "Medie mobili a favore e RSI equilibrato."
+        },
+        {
+            "ticker": "NFLX",
+            "prezzo": 68.69,
+            "sma_20": 69.97,
+            "sma_50": 74.85,
+            "rsi": 47.0,
+            "segnale": "Ribassista (Prudenza)",
+            "motivazione": "Trend di medio periodo debole."
+        },
+        {
+            "ticker": "NVDA",
+            "prezzo": 216.47,
+            "sma_20": 227.04,
+            "sma_50": 222.81,
+            "rsi": 36.45,
+            "segnale": "Rialzista (Buy/Accumulo)",
+            "motivazione": "Medie mobili a favore e RSI equilibrato."
+        },
+        {
+            "ticker": "TMUS",
+            "prezzo": 157.75,
+            "sma_20": 161.29,
+            "sma_50": 171.73,
+            "rsi": 44.71,
             "segnale": "Ribassista (Prudenza)",
             "motivazione": "Trend di medio periodo debole."
         }
