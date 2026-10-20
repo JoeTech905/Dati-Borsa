@@ -1,77 +1,14 @@
 {
-    "ultimo_aggiornamento": "2026-10-20 20:37:51",
+    "ultimo_aggiornamento": "2026-10-20 20:59:55",
     "dati": [
         {
-            "ticker": "CPR.MI",
-            "prezzo": 6.58,
-            "sma_20": 6.18,
-            "sma_50": 6.0,
-            "rsi": 74.89,
-            "segnale": "Ipercomprato (Attenzione)",
-            "motivazione": "Il titolo ha corso molto, rischio storno."
-        },
-        {
-            "ticker": "ENEL.MI",
-            "prezzo": 9.19,
-            "sma_20": 8.88,
-            "sma_50": 9.08,
-            "rsi": 67.51,
-            "segnale": "Ribassista (Prudenza)",
-            "motivazione": "Trend di medio periodo debole."
-        },
-        {
-            "ticker": "HER.MI",
-            "prezzo": 3.53,
-            "sma_20": 3.51,
-            "sma_50": 3.65,
-            "rsi": 49.28,
-            "segnale": "Ribassista (Prudenza)",
-            "motivazione": "Trend di medio periodo debole."
-        },
-        {
-            "ticker": "G.MI",
-            "prezzo": 42.33,
-            "sma_20": 42.37,
-            "sma_50": 43.58,
-            "rsi": 46.75,
-            "segnale": "Ribassista (Prudenza)",
-            "motivazione": "Trend di medio periodo debole."
-        },
-        {
-            "ticker": "RACE.MI",
-            "prezzo": 356.35,
-            "sma_20": 350.31,
-            "sma_50": 354.63,
-            "rsi": 62.45,
-            "segnale": "Ribassista (Prudenza)",
-            "motivazione": "Trend di medio periodo debole."
-        },
-        {
-            "ticker": "ISP.MI",
-            "prezzo": 5.99,
-            "sma_20": 6.36,
-            "sma_50": 6.61,
-            "rsi": 26.61,
-            "segnale": "Ipervenduto (Possibile Rimbalzo)",
-            "motivazione": "Prezzo tirato molto al ribasso, potenziale occasione."
-        },
-        {
-            "ticker": "UCG.MI",
-            "prezzo": 74.12,
-            "sma_20": 78.95,
-            "sma_50": 81.93,
-            "rsi": 26.57,
-            "segnale": "Ipervenduto (Possibile Rimbalzo)",
-            "motivazione": "Prezzo tirato molto al ribasso, potenziale occasione."
-        },
-        {
-            "ticker": "MB.MI",
-            "prezzo": 25.25,
-            "sma_20": 26.68,
-            "sma_50": 27.63,
-            "rsi": 23.46,
-            "segnale": "Ipervenduto (Possibile Rimbalzo)",
-            "motivazione": "Prezzo tirato molto al ribasso, potenziale occasione."
+            "ticker": "CNH Industrial N.V..MI",
+            "prezzo": 11.54,
+            "sma_20": 12.51,
+            "sma_50": 12.4,
+            "rsi": 36.21,
+            "segnale": "Rialzista (Buy/Accumulo)",
+            "motivazione": "Medie mobili a favore e RSI equilibrato."
         }
     ]
 }
