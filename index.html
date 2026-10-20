@@ -99,7 +99,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         .ticker-name {
             font-size: 18px;
@@ -112,13 +112,14 @@
             color: var(--text-color);
         }
 
+        /* Stile grafico del "bollino" colorato */
         .badge {
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 6px;
             font-weight: 600;
             font-size: 12px;
             display: inline-block;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .metrics-grid {
@@ -128,7 +129,7 @@
             background: var(--container-bg);
             padding: 10px;
             border-radius: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-size: 13px;
             text-align: center;
             border: 1px solid var(--border-color);
@@ -150,6 +151,7 @@
             font-style: italic;
         }
 
+        /* Colori dei badge (tema chiaro e scuro) */
         .rialzista { background-color: #d1fae5; color: #065f46; }
         .ribassista { background-color: #fee2e2; color: #991b1b; }
         .ipervenduto { background-color: #e0f2fe; color: #0369a1; }
@@ -242,10 +244,12 @@
 
                 data.dati.forEach(item => {
                     let badgeClass = 'neutro';
-                    if (item.segnale.includes('Rialzista')) badgeClass = 'rialzista';
-                    else if (item.segnale.includes('Ribassista')) badgeClass = 'ribassista';
-                    else if (item.segnale.includes('Ipervenduto')) badgeClass = 'ipervenduto';
-                    else if (item.segnale.includes('Ipercomprato')) badgeClass = 'ipercomprato';
+                    let segnaleUpper = item.segnale.toUpperCase();
+                    
+                    if (segnaleUpper.includes('RIALZISTA')) badgeClass = 'rialzista';
+                    else if (segnaleUpper.includes('RIBASSISTA')) badgeClass = 'ribassista';
+                    else if (segnaleUpper.includes('IPERVENDUTO')) badgeClass = 'ipervenduto';
+                    else if (segnaleUpper.includes('IPERCOMPRATO')) badgeClass = 'ipercomprato';
 
                     const card = `
                         <div class="stock-card">
@@ -284,4 +288,3 @@
     </script>
 </body>
 </html>
-
