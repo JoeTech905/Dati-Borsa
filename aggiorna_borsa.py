@@ -69,7 +69,12 @@ def analizza_e_salva_mercato(nome_file, lista_ticker):
     return
 
   print(f"\nInizio scansione di {len(lista_ticker)} titoli per {nome_file}...")
-  top_n = 3
+  
+  # ----------------------------------------------------
+  # MODIFICA QUI: Cambia il numero di risultati desiderati
+  # ----------------------------------------------------
+  top_n = 10  
+  
   risultati_screening = []
 
   # FASE 1: Screening rapido su tutti i titoli
