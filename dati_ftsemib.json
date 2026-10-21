@@ -1,6 +1,15 @@
 {
-    "ultimo_aggiornamento": "2026-10-20 20:59:55",
+    "ultimo_aggiornamento": "2026-10-21 06:33:02",
     "dati": [
+        {
+            "ticker": "Nexi S.p.A.[14].MI",
+            "prezzo": 0.0,
+            "sma_20": 0.0,
+            "sma_50": 0.0,
+            "rsi": NaN,
+            "segnale": "Neutro",
+            "motivazione": "Trend laterale o fase di transizione."
+        },
         {
             "ticker": "CNH Industrial N.V..MI",
             "prezzo": 11.54,
