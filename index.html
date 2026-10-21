@@ -3,282 +3,382 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Borsa - Radar Azionario</title>
+    <title>Smart Market Monitor</title>
+    
+    <!-- Configurazioni per PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1f2937">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
-            margin: 0;
-            padding: 15px;
+        :root {
+            --bg-color: #f4f6f9;
+            --container-bg: #ffffff;
+            --text-color: #333333;
+            --text-secondary: #6b7280;
+            --card-bg: #f8fafc;
+            --border-color: #e5e7eb;
         }
-        h1 {
-            text-align: center;
-            color: #1a202c;
-            font-size: 1.5rem;
-            margin-bottom: 5px;
+
+        [data-theme="dark"] {
+            --bg-color: #111827;
+            --container-bg: #1f2937;
+            --text-color: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --card-bg: #374151;
+            --border-color: #4b5563;
         }
-        .subtitle {
-            text-align: center;
-            color: #718096;
-            font-size: 0.85rem;
+
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            margin: 0; 
+            padding: 15px; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { 
+            max-width: 800px; 
+            margin: auto; 
+            background: var(--container-bg); 
+            padding: 20px; 
+            border-radius: 14px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            transition: background-color 0.3s;
+        }
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        h1 { color: var(--text-color); font-size: 22px; margin: 0; }
+        
+        .controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        select, .theme-btn {
+            background: var(--container-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        select:hover, .theme-btn:hover {
+            border-color: #3b82f6;
+        }
+
+        .timestamp { color: var(--text-secondary); font-size: 13px; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; }
+
+        /* Stili per il menu guida a tendina */
+        .guide-section {
             margin-bottom: 20px;
         }
-        /* Stile Pulsante Guida */
-        .guida-container {
-            max-width: 800px;
-            margin: 0 auto 20px auto;
-        }
-        .btn-guida {
-            width: 100%;
-            padding: 12px;
-            background-color: #2b6cb0;
-            color: white;
-            border: none;
+        .guide-btn {
+            background: var(--container-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 10px 14px;
             border-radius: 8px;
-            font-size: 0.95rem;
-            font-weight: bold;
             cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            width: 100%;
             text-align: left;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: border-color 0.2s;
         }
-        .btn-guida:hover {
-            background-color: #2c5282;
+        .guide-btn:hover {
+            border-color: #3b82f6;
         }
-        .pannello-guida {
+        .guide-panel {
             display: none;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            padding: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
+            padding: 15px;
             margin-top: 8px;
-            font-size: 0.9rem;
+            font-size: 13px;
             line-height: 1.5;
-            color: #2d3748;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            color: var(--text-color);
         }
-        .pannello-guida h3 {
+        .guide-panel h3 {
             margin-top: 0;
-            color: #1a202c;
-            font-size: 1.1rem;
-            border-bottom: 2px solid #edf2f7;
-            padding-bottom: 8px;
+            font-size: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 6px;
+            color: var(--text-color);
         }
-        .pannello-guida ul {
-            padding-left: 20px;
+        .guide-panel ul {
+            padding-left: 18px;
             margin: 8px 0;
         }
-        .pannello-guida li {
-            margin-bottom: 5px;
+        .guide-panel li {
+            margin-bottom: 4px;
         }
-        /* Selettori di mercato */
-        .tabs {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
         }
-        .tab-btn {
-            padding: 10px 15px;
-            background: #e2e8f0;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.9rem;
+
+        .stock-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px;
+            transition: transform 0.2s;
         }
-        .tab-btn.active {
-            background: #3182ce;
-            color: white;
+        .stock-card:hover {
+            transform: translateY(-2px);
         }
-        /* Schede azioni */
-        .card-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .card {
-            background: white;
-            padding: 15px;
-            margin-bottom: 12px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 10px;
         }
-        .ticker {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #2d3748;
+        .ticker-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-color);
         }
-        .prezzo {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #2b6cb0;
+        .ticker-price {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-color);
         }
-        .badge {
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            display: inline-block;
-            text-align: center;
-        }
-        /* Colori dei badge */
-        .badge-rialzista { background-color: #c6f6d5; color: #22543d; }
-        .badge-ribassista { background-color: #fed7d7; color: #742a2a; }
-        .badge-ipervenduto { background-color: #ebf8ff; color: #2b6cb0; }
-        .badge-ipercomprato { background-color: #fefcbf; color: #744210; }
-        .badge-neutro { background-color: #edf2f7; color: #4a5568; }
 
-        .details {
-            font-size: 0.85rem;
-            color: #718096;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 5px;
-            border-top: 1px solid #f7fafc;
-            padding-top: 8px;
+        /* Stile grafico del "bollino" colorato */
+        .badge {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            display: inline-block;
+            margin-bottom: 12px;
         }
-        .motivazione {
-            font-size: 0.85rem;
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            background: var(--container-bg);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 11px;
+            display: block;
+            margin-bottom: 2px;
+        }
+        .metric-value {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .motivation {
+            font-size: 13px;
+            color: var(--text-secondary);
             font-style: italic;
-            color: #4a5568;
         }
+
+        /* Colori dei badge (tema chiaro e scuro) */
+        .rialzista { background-color: #d1fae5; color: #065f46; }
+        .ribassista { background-color: #fee2e2; color: #991b1b; }
+        .ipervenduto { background-color: #e0f2fe; color: #0369a1; }
+        .ipercomprato { background-color: #fef3c7; color: #92400e; }
+        .neutro { background-color: #f3f4f6; color: #374151; }
+
+        [data-theme="dark"] .rialzista { background-color: #064e3b; color: #6ee7b7; }
+        [data-theme="dark"] .ribassista { background-color: #7f1d1d; color: #fca5a5; }
+        [data-theme="dark"] .ipervenduto { background-color: #0c4a6e; color: #7dd3fc; }
+        [data-theme="dark"] .ipercomprato { background-color: #78350f; color: #fde047; }
+        [data-theme="dark"] .neutro { background-color: #374151; color: #d1d5db; }
+
+        .loading-msg, .error-msg {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        .error-msg { color: #ef4444; }
     </style>
 </head>
 <body>
+    <div class="container">
+        <div class="header-flex">
+            <h1>📊 Smart Market Monitor</h1>
+            <div class="controls">
+                <select id="market-select" onchange="caricaDati()">
+                    <option value="dati_ftsemib.json">🇮🇹 FTSE MIB</option>
+                    <option value="dati_sp500.json">🇺🇸 S&P 500</option>
+                    <option value="dati_nasdaq.json">⚡ Nasdaq 100</option>
+                </select>
+                <button class="theme-btn" id="theme-toggle" onclick="toggleTheme()">🌙</button>
+            </div>
+        </div>
+        <div class="timestamp" id="update-time">Caricamento timestamp...</div>
+        
+        <!-- Menu Guida Rapida -->
+        <div class="guide-section">
+            <button class="guide-btn" onclick="toggleGuide()">
+                <span>📖 Guida rapida: Come interpretare i valori</span>
+                <span id="guide-arrow">▼</span>
+            </button>
+            <div id="guide-panel" class="guide-panel">
+                <h3>Come leggere questa Dashboard</h3>
+                <p>Questa app mostra i titoli più dinamici del giorno e la loro situazione tecnica attuale:</p>
+                
+                <p><strong>1. Indicatori Tecnici (I Numeri):</strong></p>
+                <ul>
+                    <li><strong>Prezzo:</strong> L'ultimo valore ufficiale di chiusura dell'azione.</li>
+                    <li><strong>SMA 20 e SMA 50 (Medie Mobili):</strong> Indicano la "velocità media" del prezzo a breve (20 giorni) e medio termine (50 giorni). Se la SMA 20 è più alta della SMA 50, il trend di fondo è positivo.</li>
+                    <li><strong>RSI (Forza Relativa 0-100):</strong> Misura la pressione d'acquisto o vendita:
+                        <ul>
+                            <li><em>Sotto 30 (Ipervenduto):</em> Prezzo sceso bruscamente, possibile area di rimbalzo.</li>
+                            <li><em>Tra 40 e 60:</em> Zona di equilibrio e normalità.</li>
+                            <li><em>Sopra 70 (Ipercomprato):</em> Prezzo salito molto rapidamente, attenzione a possibili storni.</li>
+                        </ul>
+                    </li>
+                </ul>
 
-    <h1>Radar Azionario</h1>
-    <div class="subtitle" id="data-aggiornamento">Ultimo aggiornamento: Caricamento...</div>
+                <p><strong>2. I Bollini e i Segnali (Il Verdetto):</strong></p>
+                <ul>
+                    <li>🟢 <strong>Rialzista:</strong> Medie mobili positive e RSI equilibrato. Trend sano.</li>
+                    <li>🔴 <strong>Ribassista:</strong> Trend di medio periodo debole o in calo (prudenza).</li>
+                    <li>🔵 <strong>Ipervenduto:</strong> Prezzo tirato molto al ribasso.</li>
+                    <li>🟡 <strong>Ipercomprato:</strong> Il titolo ha corso tantissimo, rischio correzione.</li>
+                </ul>
+            </div>
+        </div>
 
-    <!-- Pulsante e Pannello Guida -->
-    <div class="guida-container">
-        <button class="btn-guida" onclick="toggleGuida()">
-            <span>📖 Guida rapida: Come interpretare i valori</span>
-            <span id="freccia-guida">▼</span>
-        </button>
-        <div id="pannelloGuida" class="pannello-guida">
-            <h3>Come leggere questa Dashboard</h3>
-            <p>Questa app mostra i titoli più dinamici del giorno e la loro situazione tecnica attuale:</p>
-            
-            <p><strong>1. Indicatori Tecnici (I Numeri):</strong></p>
-            <ul>
-                <li><strong>Prezzo:</strong> L'ultimo valore ufficiale di chiusura dell'azione.</li>
-                <li><strong>SMA 20 e SMA 50 (Medie Mobili):</strong> Indicano la "velocità media" del prezzo a breve (20 giorni) e medio termine (50 giorni). Se la SMA 20 è più alta della SMA 50, il trend di fondo è positivo.</li>
-                <li><strong>RSI (Forza Relativa 0-100):</strong> Misura la pressione d'acquisto o vendita:
-                    <ul>
-                        <li><em>Sotto 30 (Ipervenduto):</em> Prezzo sceso bruscamente, possibile area di rimbalzo.</li>
-                        <li><em>Tra 40 e 60:</em> Zona di equilibrio e normalità.</li>
-                        <li><em>Sopra 70 (Ipercomprato):</em> Prezzo salito molto rapidamente, attenzione a possibili storni.</li>
-                    </ul>
-                </li>
-            </ul>
-
-            <p><strong>2. I Bollini e i Segnali (Il Verdetto):</strong></p>
-            <ul>
-                <li>🟢 <strong>Rialzista:</strong> Medie mobili positive e RSI equilibrato. Trend sano.</li>
-                <li>🔴 <strong>Ribassista:</strong> Trend di medio periodo debole o in calo (prudenza).</li>
-                <li>🔵 <strong>Ipervenduto:</strong> Prezzo tirato molto al ribasso.</li>
-                <li>🟡 <strong>Ipercomprato:</strong> Il titolo ha corso tantissimo, rischio correzione.</li>
-            </ul>
+        <div id="cards-container" class="cards-grid">
+            <div class="loading-msg">Caricamento dati in corso...</div>
         </div>
     </div>
 
-    <!-- Pulsanti scelta Mercato -->
-    <div class="tabs">
-        <button class="tab-btn active" onclick="caricaMercato('dati_ftsemib.json', this)">FTSE MIB</button>
-        <button class="tab-btn" onclick="caricaMercato('dati_sp500.json', this)">S&P 500</button>
-        <button class="tab-btn" onclick="caricaMercato('dati_nasdaq.json', this)">Nasdaq-100</button>
-    </div>
-
-    <!-- Lista dei Risultati -->
-    <div class="card-container" id="lista-risultati">
-        <p style="text-align: center; color: #718096;">Caricamento dati in corso...</p>
-    </div>
-
     <script>
-        function toggleGuida() {
-            const pannello = document.getElementById("pannelloGuida");
-            const freccia = document.getElementById("freccia-guida");
-            if (pannello.style.display === "block") {
-                pannello.style.display = "none";
-                freccia.textContent = "▼";
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const btn = document.getElementById('theme-toggle');
+            
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                btn.innerText = '🌙';
             } else {
-                pannello.style.display = "block";
-                freccia.textContent = "▲";
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                btn.innerText = '☀️';
             }
         }
 
-        async function caricaMercato(fileJson, btnElement) {
-            // Gestione classe attiva sui bottoni
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            if(btnElement) btnElement.classList.add('active');
+        function toggleGuide() {
+            const panel = document.getElementById("guide-panel");
+            const arrow = document.getElementById("guide-arrow");
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+                arrow.innerText = "▼";
+            } else {
+                panel.style.display = "block";
+                arrow.innerText = "▲";
+            }
+        }
 
-            const container = document.getElementById('lista-risultati');
-            const dataLabel = document.getElementById('data-aggiornamento');
-            container.innerHTML = '<p style="text-align: center; color: #718096;">Caricamento...</p>';
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            const btn = document.getElementById('theme-toggle');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                btn.innerText = '☀️';
+            }
+            caricaDati();
+        });
+
+        async function caricaDati() {
+            const select = document.getElementById('market-select');
+            const fileJson = select.value;
+            const nomeMercato = select.options[select.selectedIndex].text;
+            
+            const container = document.getElementById('cards-container');
+            container.innerHTML = '<div class="loading-msg">Caricamento dati in corso...</div>';
 
             try {
-                const response = await fetch(fileJson + '?t=' + new Date().getTime()); // Evita la cache
-                if (!response.ok) throw new Error("File dati non trovato");
-                
+                const response = await fetch(fileJson);
+                if (!response.ok) throw new Error("File non trovato");
                 const data = await response.json();
-                dataLabel.textContent = "Ultimo aggiornamento: " + (data.ultimo_aggiornamento || "N/D");
-
+                
+                document.getElementById('update-time').innerText = "Ultimo aggiornamento (" + nomeMercato + "): " + data.ultimo_aggiornamento;
+                
+                container.innerHTML = '';
+                
                 if (!data.dati || data.dati.length === 0) {
-                    container.innerHTML = '<p style="text-align: center; color: #718096;">Nessun dato disponibile al momento.</p>';
+                    container.innerHTML = '<div class="loading-msg">Nessun dato disponibile al momento.</div>';
                     return;
                 }
 
-                let html = '';
                 data.dati.forEach(item => {
-                    // Assegna la classe CSS corretta al badge in base al testo del segnale
-                    let badgeClass = 'badge-neutro';
-                    let segnaleLower = item.segnale.toLowerCase();
-                    if (segnaleLower.includes('rialzista')) badgeClass = 'badge-rialzista';
-                    else if (segnaleLower.includes('ribassista')) badgeClass = 'badge-ribassista';
-                    else if (segnaleLower.includes('ipervenduto')) badgeClass = 'badge-ipervenduto';
-                    else if (segnaleLower.includes('ipercomprato')) badgeClass = 'badge-ipercomprato';
+                    let badgeClass = 'neutro';
+                    let segnaleUpper = item.segnale.toUpperCase();
+                    
+                    if (segnaleUpper.includes('RIALZISTA')) badgeClass = 'rialzista';
+                    else if (segnaleUpper.includes('RIBASSISTA')) badgeClass = 'ribassista';
+                    else if (segnaleUpper.includes('IPERVENDUTO')) badgeClass = 'ipervenduto';
+                    else if (segnaleUpper.includes('IPERCOMPRATO')) badgeClass = 'ipercomprato';
 
-                    html += `
-                        <div class="card">
+                    const card = `
+                        <div class="stock-card">
                             <div class="card-header">
-                                <span class="ticker">${item.ticker}</span>
-                                <span class="prezzo">${item.prezzo}</span>
+                                <span class="ticker-name">${item.ticker}</span>
+                                <span class="ticker-price">${item.prezzo} <small style="font-size:11px; color:var(--text-secondary);">Prezzo</small></span>
                             </div>
-                            <div>
-                                <span class="badge ${badgeClass}">${item.segnale}</span>
+                            
+                            <div><span class="badge ${badgeClass}">${item.segnale}</span></div>
+
+                            <div class="metrics-grid">
+                                <div>
+                                    <span class="metric-label">SMA 20</span>
+                                    <span class="metric-value">${item.sma_20}</span>
+                                </div>
+                                <div>
+                                    <span class="metric-label">SMA 50</span>
+                                    <span class="metric-value">${item.sma_50}</span>
+                                </div>
+                                <div>
+                                    <span class="metric-label">RSI (14)</span>
+                                    <span class="metric-value">${item.rsi}</span>
+                                </div>
                             </div>
-                            <div class="motivazione">💡 ${item.motivazione}</div>
-                            <div class="details">
-                                <span>SMA 20: <strong>${item.sma_20}</strong></span>
-                                <span>SMA 50: <strong>${item.sma_50}</strong></span>
-                                <span>RSI: <strong>${item.rsi}</strong></span>
-                            </div>
+
+                            <div class="motivation">💡 ${item.motivazione}</div>
                         </div>
                     `;
+                    container.innerHTML += card;
                 });
-
-                container.innerHTML = html;
-
             } catch (error) {
-                container.innerHTML = '<p style="text-align: center; color: #e53e3e;">Errore nel caricamento dei dati di mercato.</p>';
-                dataLabel.textContent = "Ultimo aggiornamento: Errore";
+                container.innerHTML = '<div class="error-msg">Impossibile caricare i dati. Esegui prima l\'azione di aggiornamento su GitHub Actions.</div>';
+                document.getElementById('update-time').innerText = "Errore di caricamento.";
             }
         }
-
-        // Carica il primo mercato (FTSE MIB) all'avvio della pagina
-        caricaMercato('dati_ftsemib.json', null);
     </script>
 </body>
 </html>
