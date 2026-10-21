@@ -270,6 +270,21 @@ def analizza_e_salva_mercato(nome_file, lista_ticker):
 
 
 if __name__ == "__main__":
-  analizza_e_salva_mercato("dati_ftsemib.json", scarica_ticker_ftsemib())
-  analizza_e_salva_mercato("dati_sp500.json", scarica_ticker_sp500())
-  analizza_e_salva_mercato("dati_nasdaq.json", scarica_ticker_nasdaq())
+  print("--- Avvio aggiornamento mercati ---")
+
+  try:
+    analizza_e_salva_mercato("dati_ftsemib.json", scarica_ticker_ftsemib())
+  except Exception as e:
+    print(f"Errore su FTSE MIB: {e}")
+
+  try:
+    analizza_e_salva_mercato("dati_sp500.json", scarica_ticker_sp500())
+  except Exception as e:
+    print(f"Errore su S&P 500: {e}")
+
+  try:
+    analizza_e_salva_mercato("dati_nasdaq.json", scarica_ticker_nasdaq())
+  except Exception as e:
+    print(f"Errore su Nasdaq: {e}")
+
+  print("--- Aggiornamento completato ---")
