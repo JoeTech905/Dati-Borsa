@@ -7,7 +7,7 @@ import yfinance as yf
 
 
 def scarica_ticker_ftsemib():
-  """Scarica il FTSE MIB da Wikipedia con User-Agent e fallback"""
+  """Scarica il FTSE MIB da Wikipedia filtrando solo i ticker validi"""
   try:
     url = "https://it.wikipedia.org/wiki/FTSE_MIB"
     headers = {
@@ -32,6 +32,7 @@ def scarica_ticker_ftsemib():
           break
       if df is None:
         df = tabelle[0]
+
       colonna = [
           c
           for c in df.columns
@@ -44,16 +45,31 @@ def scarica_ticker_ftsemib():
           if colonna
           else df.iloc[:, 0].dropna().tolist()
       )
-      tickers = [
-          s if ".MI" in str(s) else f"{str(s).strip()}.MI" for s in simboli
-      ]
+
+      tickers = []
+      for s in simboli:
+        s_str = str(s).strip().upper()
+        # Filtra via scritte indesiderate, intestazioni o "S.P.A."
+        if (
+            not s_str
+            or "S.P.A" in s_str
+            or "SOCIETÀ" in s_str
+            or len(s_str) > 10
+            or "." in s_str.replace(".MI", "")
+        ):
+          continue
+
+        if not s_str.endswith(".MI"):
+          s_str = f"{s_str}.MI"
+        tickers.append(s_str)
+
       if len(tickers) > 5:
-        print(f"Scaricati {len(tickers)} titoli del FTSE MIB da Wikipedia.")
+        print(f"Scaricati {len(tickers)} titoli validi del FTSE MIB.")
         return tickers
   except Exception as e:
     print(f"Errore scraping FTSE MIB: {e}")
 
-  print("Uso lista di fallback per FTSE MIB.")
+  print("Uso lista di fallback sicura per FTSE MIB.")
   return [
       "ENEL.MI",
       "ENI.MI",
