@@ -2,7 +2,7 @@ name: Aggiorna Dati Borsa
 
 on:
   schedule:
-    - cron: '0 18 * * 1-5'
+    - cron: '00 16 * * 1-5'
   workflow_dispatch:
 
 permissions:
