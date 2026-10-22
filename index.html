@@ -21,9 +21,6 @@
             --text-secondary: #6b7280;
             --card-bg: #f8fafc;
             --border-color: #e5e7eb;
-            --chart-grid: rgba(0, 0, 0, 0.05);
-            --chart-line: #3b82f6;
-            --chart-fill: rgba(59, 130, 246, 0.1);
         }
 
         [data-theme="dark"] {
@@ -33,9 +30,6 @@
             --text-secondary: #9ca3af;
             --card-bg: #374151;
             --border-color: #4b5563;
-            --chart-grid: rgba(255, 255, 255, 0.05);
-            --chart-line: #60a5fa;
-            --chart-fill: rgba(96, 165, 250, 0.1);
         }
 
         body { 
@@ -156,18 +150,29 @@
         .card-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 10px;
+        }
+        .ticker-info {
+            display: flex;
+            flex-direction: column;
         }
         .ticker-name {
             font-size: 18px;
             font-weight: 700;
             color: var(--text-color);
         }
+        .company-name {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-top: 2px;
+        }
         .ticker-price {
             font-size: 18px;
             font-weight: 600;
             color: var(--text-color);
+            text-align: right;
         }
 
         /* Stile grafico del "bollino" colorato */
@@ -365,13 +370,17 @@
                     else if (segnaleUpper.includes('IPERCOMPRATO')) badgeClass = 'ipercomprato';
 
                     const canvasId = `chart_${fileJson.replace('.json', '')}_${index}`;
+                    const nomeAzienda = item.nome ? item.nome : item.ticker;
 
                     const card = document.createElement('div');
                     card.className = 'stock-card';
                     card.innerHTML = `
                         <div class="card-header">
-                            <span class="ticker-name">${item.ticker}</span>
-                            <span class="ticker-price">${item.prezzo} <small style="font-size:11px; color:var(--text-secondary);">Prezzo</small></span>
+                            <div class="ticker-info">
+                                <span class="ticker-name">${item.ticker}</span>
+                                <span class="company-name">${nomeAzienda}</span>
+                            </div>
+                            <span class="ticker-price">${item.prezzo} <small style="font-size:11px; color:var(--text-secondary); font-weight:normal;">Prezzo</small></span>
                         </div>
                         
                         <div><span class="badge ${badgeClass}">${item.segnale}</span></div>
