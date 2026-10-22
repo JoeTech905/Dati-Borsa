@@ -144,7 +144,7 @@
             padding-bottom: 6px;
         }
         .guide-panel h4 {
-            margin: 10px 0 4px 0;
+            margin: 12px 0 4px 0;
             font-size: 13px;
             color: var(--text-color);
         }
@@ -254,7 +254,6 @@
             margin-bottom: 8px;
         }
 
-        /* Etichetta sopra il grafico */
         .chart-title {
             font-size: 10px;
             color: var(--text-secondary);
@@ -318,30 +317,37 @@
             </button>
             <div id="guide-panel" class="guide-panel">
                 <h3>Manuale d'Uso della Dashboard</h3>
-                <p>Questo strumento analizza automaticamente i mercati azionari filtrando i migliori titoli in base a indicatori di analisi tecnica professionale.</p>
+                <p>Questo strumento analizza automaticamente i mercati filtrando i titoli più dinamici del giorno in base a indicatori di analisi tecnica.</p>
                 
-                <h4>1. I Grafici a Linee (Ultimi 30 Giorni)</h4>
-                <p>Ogni scheda mostra un mini-grafico blu in basso. Rappresenta lo <strong>storico degli ultimi 30 giorni di borsa</strong> (escludendo i fine settimana in cui i mercati sono chiusi). Serve per capire visivamente se il titolo sta salendo in modo regolare, se sta lateralizzando o se ha subito un crollo recente.</p>
-
-                <h4>2. Gli Indicatori Tecnici</h4>
+                <h4>1. Come vengono scelti i titoli (Perché vedo "Ipercomprato" o "Ribassista"?)</h4>
+                <p>Lo script scansiona tutto il paniere, calcola la performance a 1 mese, li ordina dal migliore al peggiore e mostra i <strong>top 15</strong> più movimentati.</p>
                 <ul>
-                    <li><strong>Prezzo:</strong> L'ultimo valore ufficiale di chiusura dell'azione.</li>
-                    <li><strong>SMA 20 e SMA 50 (Medie Mobili):</strong> Indicano la tendenza a breve (20 sedute) e medio termine (50 sedute). Se la SMA 20 è superiore alla SMA 50, il trend generale è sano e orientato al rialzo.</li>
-                    <li><strong>RSI (Relative Strength Index - 14 periodi):</strong> Misura la pressione d'acquisto o vendita su una scala da 0 a 100:
+                    <li><strong>Perché vedi "Ipercomprato" (🟡):</strong> Se un titolo ha fatto un mese eccezionale salendo molto rapidamente, lo vedrai in cima alla lista per performance, ma l'indicatore RSI supererà quota 70. L'app ti segnala l'ottimo rendimento passato avvertendoti però di un potenziale rischio di storno o pausa temporanea.</li>
+                    <li><strong>Perché vedi "Ribassista" (🔴):</strong> Nelle fasi di mercato laterali, un titolo con un trend di medio periodo debole ma protagonista di un forte rimbalzo tecnico recente può rientrare tra i migliori della giornata. L'etichetta ti ricorda che il trend di fondo resta prudente.</li>
+                </ul>
+
+                <h4>2. I Grafici a Linee (Ultimi 30 Giorni)</h4>
+                <p>Il mini-grafico blu in basso mostra lo <strong>storico delle ultime 30 sedute di borsa</strong> (esclusi i fine settimana). Ti permette di verificare colpo d'occhio se il titolo sta crescendo in modo regolare o se ha registrato impennate improvvise.</p>
+
+                <h4>3. Gli Indicatori Tecnici</h4>
+                <ul>
+                    <li><strong>Prezzo:</strong> L'ultimo valore ufficiale di chiusura.</li>
+                    <li><strong>SMA 20 e SMA 50:</strong> Medie mobili a breve (20 giorni) e medio termine (50 giorni). Se la SMA 20 è sopra la SMA 50, il trend generale è solido.</li>
+                    <li><strong>RSI (14 periodi):</strong> Misura la pressione d'acquisto (0-100):
                         <ul>
-                            <li><em>Sotto 30 (Ipervenduto):</em> Il titolo è sceso molto rapidamente; potrebbe esserci spazio per un rimbalzo tecnico.</li>
-                            <li><em>Tra 40 e 60:</em> Zona di equilibrio e normalità.</li>
-                            <li><em>Sopra 70 (Ipercomprato):</em> Il titolo è salito molto; attenzione a possibili prese di beneficio o correzioni.</li>
+                            <li><em>Sotto 30 (Ipervenduto 🔵):</em> Prezzo sceso bruscamente, possibile area di rimbalzo.</li>
+                            <li><em>Tra 40 e 60:</em> Zona di equilibrio.</li>
+                            <li><em>Sopra 70 (Ipercomprato 🟡):</em> Prezzo tirato al rialzo, attenzione a correzioni.</li>
                         </ul>
                     </li>
                 </ul>
 
-                <h4>3. I Segnali e i Bollini</h4>
+                <h4>4. I Segnali e i Bollini</h4>
                 <ul>
-                    <li>🟢 <strong>Rialzista:</strong> Medie mobili favorevoli e RSI equilibrato. Segnala un trend positivo e solido.</li>
-                    <li>🔴 <strong>Ribassista:</strong> Trend di medio periodo debole. Indica prudenza.</li>
-                    <li>🔵 <strong>Ipervenduto:</strong> Prezzo tirato molto al ribasso.</li>
-                    <li>🟡 <strong>Ipercomprato:</strong> Il titolo ha corso tantissimo, rischio temporaneo di storno.</li>
+                    <li>🟢 <strong>Rialzista:</strong> Medie mobili favorevoli e RSI equilibrato (trend sano).</li>
+                    <li>🔴 <strong>Ribassista:</strong> Trend di medio periodo debole (prudenza).</li>
+                    <li>🔵 <strong>Ipervenduto:</strong> Prezzo fortemente depresso, potenziale occasione di rimbalzo.</li>
+                    <li>🟡 <strong>Ipercomprato:</strong> Il titolo ha corso tantissimo, rischio correzione a breve.</li>
                 </ul>
             </div>
         </div>
