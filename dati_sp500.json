@@ -1,8 +1,9 @@
 {
-    "ultimo_aggiornamento": "2026-10-22 06:09:42",
+    "ultimo_aggiornamento": "2026-10-22 07:34:45",
     "dati": [
         {
             "ticker": "ACN",
+            "nome": "Accenture plc",
             "prezzo": 240.26,
             "sma_20": 204.82,
             "sma_50": 191.55,
@@ -44,6 +45,7 @@
         },
         {
             "ticker": "SHOP",
+            "nome": "Shopify Inc.",
             "prezzo": 174.29,
             "sma_20": 162.46,
             "sma_50": 150.54,
@@ -85,6 +87,7 @@
         },
         {
             "ticker": "ABBV",
+            "nome": "AbbVie Inc.",
             "prezzo": 284.8,
             "sma_20": 271.79,
             "sma_50": 263.26,
@@ -126,6 +129,7 @@
         },
         {
             "ticker": "AMGN",
+            "nome": "Amgen Inc.",
             "prezzo": 438.34,
             "sma_20": 418.02,
             "sma_50": 415.86,
@@ -167,6 +171,7 @@
         },
         {
             "ticker": "LLY",
+            "nome": "Eli Lilly and Company",
             "prezzo": 1270.75,
             "sma_20": 1194.2,
             "sma_50": 1183.52,
@@ -208,6 +213,7 @@
         },
         {
             "ticker": "BLK",
+            "nome": "BlackRock, Inc.",
             "prezzo": 1149.6,
             "sma_20": 1086.32,
             "sma_50": 1104.02,
@@ -249,6 +255,7 @@
         },
         {
             "ticker": "MSFT",
+            "nome": "Microsoft Corporation",
             "prezzo": 532.95,
             "sma_20": 525.13,
             "sma_50": 507.19,
@@ -290,6 +297,7 @@
         },
         {
             "ticker": "ADBE",
+            "nome": "Adobe Inc.",
             "prezzo": 255.06,
             "sma_20": 241.07,
             "sma_50": 255.68,
@@ -331,6 +339,7 @@
         },
         {
             "ticker": "DOW",
+            "nome": "Dow Inc.",
             "prezzo": 30.38,
             "sma_20": 28.66,
             "sma_50": 29.49,
@@ -372,6 +381,7 @@
         },
         {
             "ticker": "MDT",
+            "nome": "Medtronic plc",
             "prezzo": 93.03,
             "sma_20": 89.94,
             "sma_50": 90.69,
@@ -413,6 +423,7 @@
         },
         {
             "ticker": "SBUX",
+            "nome": "Starbucks Corporation",
             "prezzo": 99.08,
             "sma_20": 94.95,
             "sma_50": 99.77,
@@ -454,6 +465,7 @@
         },
         {
             "ticker": "AMZN",
+            "nome": "Amazon.com, Inc.",
             "prezzo": 262.37,
             "sma_20": 254.46,
             "sma_50": 256.33,
@@ -495,6 +507,7 @@
         },
         {
             "ticker": "TXN",
+            "nome": "Texas Instruments Incorporated",
             "prezzo": 284.65,
             "sma_20": 283.07,
             "sma_50": 272.12,
@@ -536,6 +549,7 @@
         },
         {
             "ticker": "PEP",
+            "nome": "PepsiCo, Inc.",
             "prezzo": 134.7,
             "sma_20": 128.35,
             "sma_50": 133.7,
@@ -577,6 +591,7 @@
         },
         {
             "ticker": "PFE",
+            "nome": "Pfizer Inc.",
             "prezzo": 29.85,
             "sma_20": 28.62,
             "sma_50": 28.15,

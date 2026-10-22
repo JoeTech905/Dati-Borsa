@@ -1,8 +1,9 @@
 {
-    "ultimo_aggiornamento": "2026-10-22 06:09:55",
+    "ultimo_aggiornamento": "2026-10-22 07:35:12",
     "dati": [
         {
             "ticker": "MRNA",
+            "nome": "Moderna, Inc.",
             "prezzo": 245.81,
             "sma_20": 210.03,
             "sma_50": 165.64,
@@ -44,6 +45,7 @@
         },
         {
             "ticker": "CTSH",
+            "nome": "Cognizant Technology Solutions Corporation",
             "prezzo": 69.55,
             "sma_20": 60.82,
             "sma_50": 60.95,
@@ -85,6 +87,7 @@
         },
         {
             "ticker": "SHOP",
+            "nome": "Shopify Inc.",
             "prezzo": 174.29,
             "sma_20": 162.46,
             "sma_50": 150.54,
@@ -126,6 +129,7 @@
         },
         {
             "ticker": "ABNB",
+            "nome": "Airbnb, Inc.",
             "prezzo": 173.69,
             "sma_20": 164.49,
             "sma_50": 172.36,
@@ -167,6 +171,7 @@
         },
         {
             "ticker": "DLTR",
+            "nome": "Dollar Tree, Inc.",
             "prezzo": 125.48,
             "sma_20": 117.91,
             "sma_50": 121.99,
@@ -208,6 +213,7 @@
         },
         {
             "ticker": "ZM",
+            "nome": "Zoom Communications, Inc.",
             "prezzo": 99.44,
             "sma_20": 94.3,
             "sma_50": 96.84,
@@ -249,6 +255,7 @@
         },
         {
             "ticker": "AEP",
+            "nome": "American Electric Power Company, Inc.",
             "prezzo": 127.39,
             "sma_20": 122.34,
             "sma_50": 122.8,
@@ -290,6 +297,7 @@
         },
         {
             "ticker": "ODFL",
+            "nome": "Old Dominion Freight Line, Inc.",
             "prezzo": 188.9,
             "sma_20": 181.09,
             "sma_50": 187.63,
@@ -331,6 +339,7 @@
         },
         {
             "ticker": "AMGN",
+            "nome": "Amgen Inc.",
             "prezzo": 438.34,
             "sma_20": 418.02,
             "sma_50": 415.86,
@@ -372,6 +381,7 @@
         },
         {
             "ticker": "IDXX",
+            "nome": "IDEXX Laboratories, Inc.",
             "prezzo": 553.48,
             "sma_20": 529.09,
             "sma_50": 533.21,
@@ -413,6 +423,7 @@
         },
         {
             "ticker": "ZS",
+            "nome": "Zscaler, Inc.",
             "prezzo": 231.33,
             "sma_20": 211.99,
             "sma_50": 194.67,
@@ -454,6 +465,7 @@
         },
         {
             "ticker": "ISRG",
+            "nome": "Intuitive Surgical, Inc.",
             "prezzo": 428.12,
             "sma_20": 416.02,
             "sma_50": 394.19,
@@ -495,6 +507,7 @@
         },
         {
             "ticker": "EXC",
+            "nome": "Exelon Corporation",
             "prezzo": 43.05,
             "sma_20": 41.61,
             "sma_50": 42.76,
@@ -536,6 +549,7 @@
         },
         {
             "ticker": "MSFT",
+            "nome": "Microsoft Corporation",
             "prezzo": 532.95,
             "sma_20": 525.13,
             "sma_50": 507.19,
@@ -577,6 +591,7 @@
         },
         {
             "ticker": "ADBE",
+            "nome": "Adobe Inc.",
             "prezzo": 255.06,
             "sma_20": 241.07,
             "sma_50": 255.68,
