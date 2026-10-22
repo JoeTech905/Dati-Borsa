@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Smart Market Monitor</title>
     
     <!-- Configurazioni per PWA -->
@@ -32,32 +32,47 @@
             --border-color: #4b5563;
         }
 
+        * {
+            box-sizing: border-box; /* Fondamentale per evitare scompensi di larghezza */
+        }
+
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
             background-color: var(--bg-color); 
             color: var(--text-color); 
             margin: 0; 
-            padding: 12px; 
+            padding: 10px; 
+            width: 100vw;
+            overflow-x: hidden;
             transition: background-color 0.3s, color 0.3s;
         }
+
         .container { 
+            width: 100%;
             max-width: 800px; 
-            margin: auto; 
+            margin: 0 auto; 
             background: var(--container-bg); 
-            padding: 16px; 
-            border-radius: 14px; 
+            padding: 14px; 
+            border-radius: 12px; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
             transition: background-color 0.3s;
         }
+
         .header-flex {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 8px;
+            width: 100%;
         }
-        h1 { color: var(--text-color); font-size: 20px; margin: 0; }
+
+        h1 { 
+            color: var(--text-color); 
+            font-size: 20px; 
+            margin: 0; 
+        }
         
         .controls {
             display: flex;
@@ -68,33 +83,38 @@
 
         select {
             flex: 1;
+            width: 100%;
         }
 
         select, .theme-btn {
             background: var(--container-bg);
             border: 1px solid var(--border-color);
             color: var(--text-color);
-            padding: 10px 12px;
+            padding: 10px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
             font-weight: 500;
         }
-        select:hover, .theme-btn:hover {
-            border-color: #3b82f6;
+
+        .timestamp { 
+            color: var(--text-secondary); 
+            font-size: 12px; 
+            margin-bottom: 12px; 
+            border-bottom: 1px solid var(--border-color); 
+            padding-bottom: 8px; 
         }
 
-        .timestamp { color: var(--text-secondary); font-size: 12px; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
-
-        /* Stili per il menu guida a tendina */
+        /* Menu Guida */
         .guide-section {
-            margin-bottom: 16px;
+            margin-bottom: 14px;
+            width: 100%;
         }
         .guide-btn {
             background: var(--container-bg);
             border: 1px solid var(--border-color);
             color: var(--text-color);
-            padding: 10px 14px;
+            padding: 10px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 13px;
@@ -104,10 +124,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: border-color 0.2s;
-        }
-        .guide-btn:hover {
-            border-color: #3b82f6;
         }
         .guide-panel {
             display: none;
@@ -115,38 +131,36 @@
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 12px;
-            margin-top: 8px;
+            margin-top: 6px;
             font-size: 12px;
             line-height: 1.4;
             color: var(--text-color);
+            width: 100%;
         }
         .guide-panel h3 {
             margin-top: 0;
             font-size: 14px;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 6px;
-            color: var(--text-color);
         }
         .guide-panel ul {
             padding-left: 16px;
             margin: 6px 0;
         }
-        .guide-panel li {
-            margin-bottom: 3px;
-        }
 
+        /* Griglia e Schede */
         .cards-grid {
-            display: grid;
-            grid-template-columns: 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 12px;
+            width: 100%;
         }
 
         .stock-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            padding: 14px;
-            box-sizing: border-box;
+            padding: 12px;
             width: 100%;
         }
 
@@ -154,20 +168,24 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 8px;
+            margin-bottom: 8px;
+            width: 100%;
         }
+
         .ticker-info {
             display: flex;
             flex-direction: column;
-            min-width: 0; /* Fondamentale per evitare che il testo lungo rompa il flex */
+            min-width: 0;
             flex: 1;
         }
+
         .ticker-name {
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 700;
             color: var(--text-color);
         }
+
         .company-name {
             font-size: 11px;
             color: var(--text-secondary);
@@ -175,24 +193,24 @@
             margin-top: 2px;
             white-space: nowrap;
             overflow: hidden;
-            text-overflow: ellipsis; /* Tronca elegantemente con i puntini se il nome è lunghissimo */
+            text-overflow: ellipsis;
         }
+
         .ticker-price {
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 600;
             color: var(--text-color);
             text-align: right;
             white-space: nowrap;
         }
 
-        /* Stile grafico del "bollino" colorato */
         .badge {
-            padding: 5px 10px;
+            padding: 4px 10px;
             border-radius: 6px;
             font-weight: 600;
             font-size: 11px;
             display: inline-block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .metrics-grid {
@@ -202,18 +220,20 @@
             background: var(--container-bg);
             padding: 8px;
             border-radius: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-size: 12px;
             text-align: center;
             border: 1px solid var(--border-color);
-            box-sizing: border-box;
+            width: 100%;
         }
+
         .metric-label {
             color: var(--text-secondary);
             font-size: 10px;
             display: block;
             margin-bottom: 2px;
         }
+
         .metric-value {
             font-weight: 600;
             color: var(--text-color);
@@ -223,20 +243,20 @@
             font-size: 12px;
             color: var(--text-secondary);
             font-style: italic;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
+        /* Contenitore grafico ottimizzato per mobile */
         .chart-container {
             position: relative;
-            height: 100px;
+            height: 110px;
             width: 100%;
-            margin-top: 8px;
+            margin-top: 6px;
             border-top: 1px solid var(--border-color);
-            padding-top: 8px;
-            box-sizing: border-box;
+            padding-top: 6px;
         }
 
-        /* Colori dei badge (tema chiaro e scuro) */
+        /* Colori Badge */
         .rialzista { background-color: #d1fae5; color: #065f46; }
         .ribassista { background-color: #fee2e2; color: #991b1b; }
         .ipervenduto { background-color: #e0f2fe; color: #0369a1; }
@@ -254,6 +274,7 @@
             padding: 20px;
             color: var(--text-secondary);
             font-size: 13px;
+            width: 100%;
         }
         .error-msg { color: #ef4444; }
     </style>
@@ -273,7 +294,7 @@
         </div>
         <div class="timestamp" id="update-time">Caricamento timestamp...</div>
         
-        <!-- Menu Guida Rapida -->
+        <!-- Menu Guida -->
         <div class="guide-section">
             <button class="guide-btn" onclick="toggleGuide()">
                 <span>📖 Guida rapida: Come interpretare i valori</span>
@@ -281,28 +302,13 @@
             </button>
             <div id="guide-panel" class="guide-panel">
                 <h3>Come leggere questa Dashboard</h3>
-                <p>Questa app mostra i titoli più dinamici del giorno e la loro situazione tecnica attuale:</p>
-                
-                <p><strong>1. Indicatori Tecnici (I Numeri):</strong></p>
+                <p><strong>1. Indicatori Tecnici:</strong></p>
                 <ul>
-                    <li><strong>Prezzo:</strong> L'ultimo valore ufficiale di chiusura dell'azione.</li>
-                    <li><strong>SMA 20 e SMA 50 (Medie Mobili):</strong> Indicano la "velocità media" del prezzo a breve (20 giorni) e medio termine (50 giorni). Se la SMA 20 è più alta della SMA 50, il trend di fondo è positivo.</li>
-                    <li><strong>RSI (Forza Relativa 0-100):</strong> Misura la pressione d'acquisto o vendita:
-                        <ul>
-                            <li><em>Sotto 30 (Ipervenduto):</em> Prezzo sceso bruscamente, possibile area di rimbalzo.</li>
-                            <li><em>Tra 40 e 60:</em> Zona di equilibrio e normalità.</li>
-                            <li><em>Sopra 70 (Ipercomprato):</em> Prezzo salito molto rapidamente, attenzione a possibili storni.</li>
-                        </ul>
-                    </li>
+                    <li><strong>Prezzo:</strong> Ultima chiusura ufficiale.</li>
+                    <li><strong>SMA 20/50:</strong> Medie mobili breve e medio termine.</li>
+                    <li><strong>RSI (14):</strong> Sotto 30 = Ipervenduto (rimbalzo); Sopra 70 = Ipercomprato.</li>
                 </ul>
-
-                <p><strong>2. I Bollini e i Segnali (Il Verdetto):</strong></p>
-                <ul>
-                    <li>🟢 <strong>Rialzista:</strong> Medie mobili positive e RSI equilibrato. Trend sano.</li>
-                    <li>🔴 <strong>Ribassista:</strong> Trend di medio periodo debole o in calo (prudenza).</li>
-                    <li>🔵 <strong>Ipervenduto:</strong> Prezzo tirato molto al ribasso.</li>
-                    <li>🟡 <strong>Ipercomprato:</strong> Il titolo ha corso tantissimo, rischio correzione.</li>
-                </ul>
+                <p><strong>2. I Segnali:</strong> Rialzista, Ribassista, Ipervenduto o Ipercomprato.</p>
             </div>
         </div>
 
@@ -348,6 +354,11 @@
                 btn.innerText = '☀️';
             }
             caricaDati();
+        });
+
+        // Ricarica o adatta i grafici se lo smartphone viene ruotato
+        window.addEventListener('orientationchange', () => {
+            setTimeout(caricaDati, 300);
         });
 
         async function caricaDati() {
@@ -420,7 +431,7 @@
                     `;
                     container.appendChild(card);
 
-                    // Generazione mini-grafico di trend con Chart.js se lo storico è presente
+                    // Generazione mini-grafico di trend con Chart.js ottimizzato per mobile
                     if (item.storico && item.storico.length > 0) {
                         const ctx = document.getElementById(canvasId).getContext('2d');
                         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -448,7 +459,7 @@
                                     y: { 
                                         display: true, 
                                         grid: { color: isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)' }, 
-                                        ticks: { color: isDark ? '#9ca3af' : '#6b7280', font: { size: 10 } } 
+                                        ticks: { color: isDark ? '#9ca3af' : '#6b7280', font: { size: 9 } } 
                                     }
                                 }
                             }
