@@ -33,7 +33,7 @@
         }
 
         * {
-            box-sizing: border-box; /* Fondamentale per evitare scompensi di larghezza */
+            box-sizing: border-box;
         }
 
         body { 
@@ -105,7 +105,7 @@
             padding-bottom: 8px; 
         }
 
-        /* Menu Guida */
+        /* Menu Guida Completa */
         .guide-section {
             margin-bottom: 14px;
             width: 100%;
@@ -133,7 +133,7 @@
             padding: 12px;
             margin-top: 6px;
             font-size: 12px;
-            line-height: 1.4;
+            line-height: 1.5;
             color: var(--text-color);
             width: 100%;
         }
@@ -143,9 +143,17 @@
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 6px;
         }
+        .guide-panel h4 {
+            margin: 10px 0 4px 0;
+            font-size: 13px;
+            color: var(--text-color);
+        }
         .guide-panel ul {
             padding-left: 16px;
-            margin: 6px 0;
+            margin: 4px 0 10px 0;
+        }
+        .guide-panel li {
+            margin-bottom: 3px;
         }
 
         /* Griglia e Schede */
@@ -246,12 +254,20 @@
             margin-bottom: 8px;
         }
 
-        /* Contenitore grafico ottimizzato per mobile */
+        /* Etichetta sopra il grafico */
+        .chart-title {
+            font-size: 10px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
         .chart-container {
             position: relative;
-            height: 110px;
+            height: 105px;
             width: 100%;
-            margin-top: 6px;
+            margin-top: 4px;
             border-top: 1px solid var(--border-color);
             padding-top: 6px;
         }
@@ -294,21 +310,39 @@
         </div>
         <div class="timestamp" id="update-time">Caricamento timestamp...</div>
         
-        <!-- Menu Guida -->
+        <!-- Menu Guida Dettagliata -->
         <div class="guide-section">
             <button class="guide-btn" onclick="toggleGuide()">
-                <span>📖 Guida rapida: Come interpretare i valori</span>
+                <span>📖 Guida completa: Come funziona il programma</span>
                 <span id="guide-arrow">▼</span>
             </button>
             <div id="guide-panel" class="guide-panel">
-                <h3>Come leggere questa Dashboard</h3>
-                <p><strong>1. Indicatori Tecnici:</strong></p>
+                <h3>Manuale d'Uso della Dashboard</h3>
+                <p>Questo strumento analizza automaticamente i mercati azionari filtrando i migliori titoli in base a indicatori di analisi tecnica professionale.</p>
+                
+                <h4>1. I Grafici a Linee (Ultimi 30 Giorni)</h4>
+                <p>Ogni scheda mostra un mini-grafico blu in basso. Rappresenta lo <strong>storico degli ultimi 30 giorni di borsa</strong> (escludendo i fine settimana in cui i mercati sono chiusi). Serve per capire visivamente se il titolo sta salendo in modo regolare, se sta lateralizzando o se ha subito un crollo recente.</p>
+
+                <h4>2. Gli Indicatori Tecnici</h4>
                 <ul>
-                    <li><strong>Prezzo:</strong> Ultima chiusura ufficiale.</li>
-                    <li><strong>SMA 20/50:</strong> Medie mobili breve e medio termine.</li>
-                    <li><strong>RSI (14):</strong> Sotto 30 = Ipervenduto (rimbalzo); Sopra 70 = Ipercomprato.</li>
+                    <li><strong>Prezzo:</strong> L'ultimo valore ufficiale di chiusura dell'azione.</li>
+                    <li><strong>SMA 20 e SMA 50 (Medie Mobili):</strong> Indicano la tendenza a breve (20 sedute) e medio termine (50 sedute). Se la SMA 20 è superiore alla SMA 50, il trend generale è sano e orientato al rialzo.</li>
+                    <li><strong>RSI (Relative Strength Index - 14 periodi):</strong> Misura la pressione d'acquisto o vendita su una scala da 0 a 100:
+                        <ul>
+                            <li><em>Sotto 30 (Ipervenduto):</em> Il titolo è sceso molto rapidamente; potrebbe esserci spazio per un rimbalzo tecnico.</li>
+                            <li><em>Tra 40 e 60:</em> Zona di equilibrio e normalità.</li>
+                            <li><em>Sopra 70 (Ipercomprato):</em> Il titolo è salito molto; attenzione a possibili prese di beneficio o correzioni.</li>
+                        </ul>
+                    </li>
                 </ul>
-                <p><strong>2. I Segnali:</strong> Rialzista, Ribassista, Ipervenduto o Ipercomprato.</p>
+
+                <h4>3. I Segnali e i Bollini</h4>
+                <ul>
+                    <li>🟢 <strong>Rialzista:</strong> Medie mobili favorevoli e RSI equilibrato. Segnala un trend positivo e solido.</li>
+                    <li>🔴 <strong>Ribassista:</strong> Trend di medio periodo debole. Indica prudenza.</li>
+                    <li>🔵 <strong>Ipervenduto:</strong> Prezzo tirato molto al ribasso.</li>
+                    <li>🟡 <strong>Ipercomprato:</strong> Il titolo ha corso tantissimo, rischio temporaneo di storno.</li>
+                </ul>
             </div>
         </div>
 
@@ -356,7 +390,6 @@
             caricaDati();
         });
 
-        // Ricarica o adatta i grafici se lo smartphone viene ruotato
         window.addEventListener('orientationchange', () => {
             setTimeout(caricaDati, 300);
         });
@@ -425,13 +458,13 @@
 
                         <div class="motivation">💡 ${item.motivazione}</div>
 
+                        <div class="chart-title">📈 Andamento Prezzo (Ultimi 30 Giorni)</div>
                         <div class="chart-container">
                             <canvas id="${canvasId}"></canvas>
                         </div>
                     `;
                     container.appendChild(card);
 
-                    // Generazione mini-grafico di trend con Chart.js ottimizzato per mobile
                     if (item.storico && item.storico.length > 0) {
                         const ctx = document.getElementById(canvasId).getContext('2d');
                         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
