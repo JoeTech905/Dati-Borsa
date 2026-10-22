@@ -321,11 +321,18 @@ def analizza_e_salva_mercato(nome_file, lista_ticker):
           segnale = "Ipercomprato (Attenzione)"
           motivo = "Il titolo ha corso molto, rischio storno."
 
+        # Recupera il nome completo dell'azienda
+        try:
+          nome_azienda = yf.Ticker(ticker).info.get("longName", ticker)
+        except Exception:
+          nome_azienda = ticker
+
         # Storico ultimi 30 giorni per il grafico
         storico_30 = [round(float(p), 2) for p in close.tail(30).tolist()]
 
         risultati_finali.append({
             "ticker": ticker,
+            "nome": nome_azienda,
             "prezzo": round(ultimo_prezzo, 2),
             "rendimento_1m": rendimento_pct,
             "sma_20": round(sma_20, 2),
