@@ -4,7 +4,7 @@ import time
 import pandas as pd
 import yfinance as yf
 
-# 1. FTSE MIB COMPLETO (Tutti i principali titoli di Piazza Affari)
+# 1. FTSE MIB COMPLETO
 TICKERS_FTSEMIB = [
     "A2A.MI",
     "AMP.MI",
@@ -43,7 +43,7 @@ TICKERS_FTSEMIB = [
     "UNIP.MI",
 ]
 
-# 2. NASDAQ ESTESO (I 100 componenti ufficiali + le principali Mid-Cap e Growth Tech)
+# 2. NASDAQ ESTESO (Componenti ufficiali + Mid-Cap / Growth Tech)
 TICKERS_NASDAQ = [
     "AAPL",
     "ABNB",
@@ -148,7 +148,7 @@ TICKERS_NASDAQ = [
     "ZS",
 ]
 
-# 3. S&P 500 SELEZIONE TOP & GROWTH (I leader di mercato + le migliori azioni ad alta crescita e rotazione)
+# 3. S&P 500 SELEZIONE TOP & GROWTH
 TICKERS_SP500 = [
     "AAPL",
     "ABBV",
@@ -239,12 +239,7 @@ TICKERS_SP500 = [
 
 
 def scarica_in_micro_blocchi(lista_ticker, dim_blocco=40):
-  """Scarica i dati storici dividendo la lista in piccoli gruppi
-
-  per non sovraccaricare Yahoo Finance.
-  """
   df_totale_unito = pd.DataFrame()
-
   for i in range(0, len(lista_ticker), dim_blocco):
     sotto_lista = lista_ticker[i : i + dim_blocco]
     try:
@@ -256,38 +251,24 @@ def scarica_in_micro_blocchi(lista_ticker, dim_blocco=40):
           group_by="ticker",
       )
       if not df_chunk.empty:
-        if isinstance(df_chunk.columns, pd.MultiIndex):
-          if df_totale_unito.empty:
-            df_totale_unito = df_chunk
-          else:
-            df_totale_unito = pd.concat([df_totale_unito, df_chunk], axis=1)
+        if df_totale_unito.empty:
+          df_totale_unito = df_chunk
         else:
-          # Caso di un unico ticker nel blocco
-          if df_totale_unito.empty:
-            df_totale_unito = df_chunk
-          else:
-            df_totale_unito = pd.concat([df_totale_unito, df_chunk], axis=1)
-    except Exception as e:
-      print(f"Avviso su un blocco di download: {e}")
-
-    # Breve pausa di cortesia tra un blocco e l'altro per stabilire la connessione
+          df_totale_unito = pd.concat([df_totale_unito, df_chunk], axis=1)
+    except Exception:
+      pass
     time.sleep(1)
-
   return df_totale_unito
 
 
 def analizza_e_salva_mercato(nome_file, lista_ticker):
-  print(
-      f"\nScansione estesa in micro-blocchi per {nome_file}"
-      f" ({len(lista_ticker)} titoli)..."
-  )
+  print(f"\nScansione estesa per {nome_file} ({len(lista_ticker)} titoli)...")
   risultati_finali = []
-  top_n = 15  # Mostriamo i migliori 15 sulla PWA per avere più scelta
+  top_n = 15
 
   try:
     df_totale = scarica_in_micro_blocchi(lista_ticker, dim_blocco=40)
     if df_totale.empty:
-      print(f"Nessun dato ricevuto per {nome_file}")
       return
 
     for ticker in lista_ticker:
@@ -295,7 +276,6 @@ def analizza_e_salva_mercato(nome_file, lista_ticker):
         if len(lista_ticker) == 1:
           df = df_totale
         else:
-          # Gestione sicura dell'estrazione del singolo ticker dal MultiIndex
           if ticker in df_totale.columns.levels[0]:
             df = df_totale[ticker]
           else:
@@ -324,7 +304,7 @@ def analizza_e_salva_mercato(nome_file, lista_ticker):
         rsi = float((100 - (100 / (1 + rs))).iloc[-1])
 
         if rsi >= 75:
-          continue  # Esclude ipercomprato estremo
+          continue
 
         segnale = "Neutro"
         motivo = "Trend laterale o fase di transizione."
@@ -341,6 +321,9 @@ def analizza_e_salva_mercato(nome_file, lista_ticker):
           segnale = "Ipercomprato (Attenzione)"
           motivo = "Il titolo ha corso molto, rischio storno."
 
+        # Storico ultimi 30 giorni per il grafico
+        storico_30 = [round(float(p), 2) for p in close.tail(30).tolist()]
+
         risultati_finali.append({
             "ticker": ticker,
             "prezzo": round(ultimo_prezzo, 2),
@@ -350,11 +333,11 @@ def analizza_e_salva_mercato(nome_file, lista_ticker):
             "rsi": round(rsi, 2),
             "segnale": segnale,
             "motivazione": motivo,
+            "storico": storico_30,
         })
       except Exception:
         continue
 
-    # Ordina per performance a 1 mese (decrescente) e prende i migliori top_n
     risultati_finali.sort(key=lambda x: x["rendimento_1m"], reverse=True)
     risultati_finali = risultati_finali[:top_n]
 
@@ -370,29 +353,13 @@ def analizza_e_salva_mercato(nome_file, lista_ticker):
       json.dump(payload, f, ensure_ascii=False, indent=4)
     print(
         f"✔ File {nome_file} generato con successo ({len(risultati_finali)}"
-        " migliori trovati)."
+        " titoli)."
     )
-
   except Exception as e:
-    print(f"Errore generale nel blocco {nome_file}: {e}")
+    print(f"Errore su {nome_file}: {e}")
 
 
 if __name__ == "__main__":
-  print("=== AVVIAMENTO ANALISI SUPER-PANIERE ESTESO ===")
-
-  try:
-    analizza_e_salva_mercato("dati_ftsemib.json", TICKERS_FTSEMIB)
-  except Exception as e:
-    print(f"Errore critico FTSE MIB: {e}")
-
-  try:
-    analizza_e_salva_mercato("dati_sp500.json", TICKERS_SP500)
-  except Exception as e:
-    print(f"Errore critico S&P 500: {e}")
-
-  try:
-    analizza_e_salva_mercato("dati_nasdaq.json", TICKERS_NASDAQ)
-  except Exception as e:
-    print(f"Errore critico Nasdaq: {e}")
-
-  print("=== ELABORAZIONE COMPLETATA ===")
+  analizza_e_salva_mercato("dati_ftsemib.json", TICKERS_FTSEMIB)
+  analizza_e_salva_mercato("dati_sp500.json", TICKERS_SP500)
+  analizza_e_salva_mercato("dati_nasdaq.json", TICKERS_NASDAQ)
