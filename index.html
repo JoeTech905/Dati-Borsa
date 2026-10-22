@@ -9,6 +9,9 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1f2937">
     <link rel="apple-touch-icon" href="icon-192.png">
+
+    <!-- Chart.js per i grafici di trend -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
         :root {
@@ -18,6 +21,9 @@
             --text-secondary: #6b7280;
             --card-bg: #f8fafc;
             --border-color: #e5e7eb;
+            --chart-grid: rgba(0, 0, 0, 0.05);
+            --chart-line: #3b82f6;
+            --chart-fill: rgba(59, 130, 246, 0.1);
         }
 
         [data-theme="dark"] {
@@ -27,6 +33,9 @@
             --text-secondary: #9ca3af;
             --card-bg: #374151;
             --border-color: #4b5563;
+            --chart-grid: rgba(255, 255, 255, 0.05);
+            --chart-line: #60a5fa;
+            --chart-fill: rgba(96, 165, 250, 0.1);
         }
 
         body { 
@@ -198,6 +207,16 @@
             font-size: 13px;
             color: var(--text-secondary);
             font-style: italic;
+            margin-bottom: 12px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 110px;
+            width: 100%;
+            margin-top: 10px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 10px;
         }
 
         /* Colori dei badge (tema chiaro e scuro) */
@@ -336,7 +355,7 @@
                     return;
                 }
 
-                data.dati.forEach(item => {
+                data.dati.forEach((item, index) => {
                     let badgeClass = 'neutro';
                     let segnaleUpper = item.segnale.toUpperCase();
                     
@@ -345,34 +364,75 @@
                     else if (segnaleUpper.includes('IPERVENDUTO')) badgeClass = 'ipervenduto';
                     else if (segnaleUpper.includes('IPERCOMPRATO')) badgeClass = 'ipercomprato';
 
-                    const card = `
-                        <div class="stock-card">
-                            <div class="card-header">
-                                <span class="ticker-name">${item.ticker}</span>
-                                <span class="ticker-price">${item.prezzo} <small style="font-size:11px; color:var(--text-secondary);">Prezzo</small></span>
-                            </div>
-                            
-                            <div><span class="badge ${badgeClass}">${item.segnale}</span></div>
+                    const canvasId = `chart_${fileJson.replace('.json', '')}_${index}`;
 
-                            <div class="metrics-grid">
-                                <div>
-                                    <span class="metric-label">SMA 20</span>
-                                    <span class="metric-value">${item.sma_20}</span>
-                                </div>
-                                <div>
-                                    <span class="metric-label">SMA 50</span>
-                                    <span class="metric-value">${item.sma_50}</span>
-                                </div>
-                                <div>
-                                    <span class="metric-label">RSI (14)</span>
-                                    <span class="metric-value">${item.rsi}</span>
-                                </div>
-                            </div>
+                    const card = document.createElement('div');
+                    card.className = 'stock-card';
+                    card.innerHTML = `
+                        <div class="card-header">
+                            <span class="ticker-name">${item.ticker}</span>
+                            <span class="ticker-price">${item.prezzo} <small style="font-size:11px; color:var(--text-secondary);">Prezzo</small></span>
+                        </div>
+                        
+                        <div><span class="badge ${badgeClass}">${item.segnale}</span></div>
 
-                            <div class="motivation">💡 ${item.motivazione}</div>
+                        <div class="metrics-grid">
+                            <div>
+                                <span class="metric-label">SMA 20</span>
+                                <span class="metric-value">${item.sma_20}</span>
+                            </div>
+                            <div>
+                                <span class="metric-label">SMA 50</span>
+                                <span class="metric-value">${item.sma_50}</span>
+                            </div>
+                            <div>
+                                <span class="metric-label">RSI (14)</span>
+                                <span class="metric-value">${item.rsi}</span>
+                            </div>
+                        </div>
+
+                        <div class="motivation">💡 ${item.motivazione}</div>
+
+                        <div class="chart-container">
+                            <canvas id="${canvasId}"></canvas>
                         </div>
                     `;
-                    container.innerHTML += card;
+                    container.appendChild(card);
+
+                    // Generazione mini-grafico di trend con Chart.js se lo storico è presente
+                    if (item.storico && item.storico.length > 0) {
+                        const ctx = document.getElementById(canvasId).getContext('2d');
+                        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                        
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: item.storico.map((_, i) => i + 1),
+                                datasets: [{
+                                    data: item.storico,
+                                    borderColor: isDark ? '#60a5fa' : '#3b82f6',
+                                    borderWidth: 2,
+                                    pointRadius: 0,
+                                    fill: true,
+                                    backgroundColor: isDark ? 'rgba(96, 165, 250, 0.1)' : 'rgba(59, 130, 246, 0.1)',
+                                    tension: 0.2
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: { legend: { display: false } },
+                                scales: {
+                                    x: { display: false },
+                                    y: { 
+                                        display: true, 
+                                        grid: { color: isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)' }, 
+                                        ticks: { color: isDark ? '#9ca3af' : '#6b7280', font: { size: 10 } } 
+                                    }
+                                }
+                            }
+                        });
+                    }
                 });
             } catch (error) {
                 container.innerHTML = '<div class="error-msg">Impossibile caricare i dati. Esegui prima l\'azione di aggiornamento su GitHub Actions.</div>';
