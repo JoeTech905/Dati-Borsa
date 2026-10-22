@@ -317,27 +317,27 @@
             </button>
             <div id="guide-panel" class="guide-panel">
                 <h3>Manuale d'Uso della Dashboard</h3>
-                <p>Questo strumento analizza automaticamente i mercati filtrando i titoli più dinamici del giorno in base a indicatori di analisi tecnica.</p>
+                <p>Questo strumento analizza automaticamente i mercati filtrando i titoli più dinamici in base a indicatori di analisi tecnica.</p>
                 
-                <h4>1. Come vengono scelti i titoli (Perché vedo "Ipercomprato" o "Ribassista"?)</h4>
-                <p>Lo script scansiona tutto il paniere, calcola la performance a 1 mese, li ordina dal migliore al peggiore e mostra i <strong>top 15</strong> più movimentati.</p>
+                <h4>1. Come vengono scelti i titoli</h4>
+                <p>Lo script scansiona il paniere, calcola la performance a 1 mese, li ordina e mostra i <strong>top 15</strong> più movimentati.</p>
                 <ul>
-                    <li><strong>Perché vedi "Ipercomprato" (🟡):</strong> Se un titolo ha fatto un mese eccezionale salendo molto rapidamente, lo vedrai in cima alla lista per performance, ma l'indicatore RSI supererà quota 70. L'app ti segnala l'ottimo rendimento passato avvertendoti però di un potenziale rischio di storno o pausa temporanea.</li>
-                    <li><strong>Perché vedi "Ribassista" (🔴):</strong> Nelle fasi di mercato laterali, un titolo con un trend di medio periodo debole ma protagonista di un forte rimbalzo tecnico recente può rientrare tra i migliori della giornata. L'etichetta ti ricorda che il trend di fondo resta prudente.</li>
+                    <li><strong>Perché vedi "Ipercomprato" (🟡):</strong> Il titolo ha fatto un mese eccezionale salendo rapidamente, ma l'indicatore RSI ha superato quota 70. Segnala ottima performance passata con avviso di potenziale storno o pausa.</li>
+                    <li><strong>Perché vedi "Ribassista" (🔴):</strong> Un titolo con un trend di medio periodo debole ma protagonista di un forte rimbalzo tecnico recente rientra tra i migliori della giornata (il trend di fondo resta comunque prudente).</li>
                 </ul>
 
                 <h4>2. I Grafici a Linee (Ultimi 30 Giorni)</h4>
-                <p>Il mini-grafico blu in basso mostra lo <strong>storico delle ultime 30 sedute di borsa</strong> (esclusi i fine settimana). Ti permette di verificare colpo d'occhio se il titolo sta crescendo in modo regolare o se ha registrato impennate improvvise.</p>
+                <p>Il mini-grafico blu in basso mostra lo <strong>storico delle ultime 30 sedute di borsa</strong> (esclusi i weekend) per verificare visivamente l'andamento recente del prezzo.</p>
 
-                <h4>3. Gli Indicatori Tecnici</h4>
+                <h4>3. Gli Indicatori Tecnici e l'Ipervenduto</h4>
                 <ul>
                     <li><strong>Prezzo:</strong> L'ultimo valore ufficiale di chiusura.</li>
-                    <li><strong>SMA 20 e SMA 50:</strong> Medie mobili a breve (20 giorni) e medio termine (50 giorni). Se la SMA 20 è sopra la SMA 50, il trend generale è solido.</li>
-                    <li><strong>RSI (14 periodi):</strong> Misura la pressione d'acquisto (0-100):
+                    <li><strong>SMA 20 e SMA 50:</strong> Medie mobili a breve (20 giorni) e medio termine (50 giorni).</li>
+                    <li><strong>RSI (14 periodi) e Ipervenduto (🔵):</strong> Misura la pressione d'acquisto/vendita (0-100):
                         <ul>
-                            <li><em>Sotto 30 (Ipervenduto 🔵):</em> Prezzo sceso bruscamente, possibile area di rimbalzo.</li>
-                            <li><em>Tra 40 e 60:</em> Zona di equilibrio.</li>
-                            <li><em>Sopra 70 (Ipercomprato 🟡):</em> Prezzo tirato al rialzo, attenzione a correzioni.</li>
+                            <li><em>Sotto 30 (Ipervenduto):</em> Il prezzo è sceso in modo molto forte e rapido (svenduto). Spesso segnala un'area di potenziale rimbalzo tecnico in quanto il titolo è tirato troppo al ribasso.</li>
+                            <li><em>Tra 40 e 60:</em> Zona di equilibrio e normalità.</li>
+                            <li><em>Sopra 70 (Ipercomprato):</em> Prezzo tirato al rialzo, attenzione a correzioni.</li>
                         </ul>
                     </li>
                 </ul>
